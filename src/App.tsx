@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Watch as WatchIcon, LayoutGrid, BarChart3, Bell, Download, Plus, ArrowLeft } from 'lucide-react'
+import { Watch as WatchIcon, LayoutGrid, BarChart3, Bell, Download, Plus, ArrowLeft, Settings as SettingsIcon } from 'lucide-react'
 import { useWatches } from './hooks/useWatches'
 import CollectionGrid from './components/CollectionGrid'
 import WatchForm from './components/WatchForm'
@@ -7,15 +7,17 @@ import Dashboard from './components/Dashboard'
 import ServiceReminders from './components/ServiceReminders'
 import ExportPanel from './components/ExportPanel'
 import WatchDetail from './components/WatchDetail'
+import Settings from './components/Settings'
 import type { Watch } from './db/types'
 
-type View = 'collection' | 'add' | 'edit' | 'detail' | 'dashboard' | 'reminders' | 'export'
+type View = 'collection' | 'add' | 'edit' | 'detail' | 'dashboard' | 'reminders' | 'export' | 'settings'
 
 const NAV_ITEMS = [
   { id: 'collection' as const, label: 'Collection', icon: LayoutGrid },
   { id: 'dashboard' as const, label: 'Portfolio', icon: BarChart3 },
   { id: 'reminders' as const, label: 'Service', icon: Bell },
   { id: 'export' as const, label: 'Export', icon: Download },
+  { id: 'settings' as const, label: 'Settings', icon: SettingsIcon },
 ]
 
 export default function App() {
@@ -71,6 +73,7 @@ export default function App() {
           {view === 'dashboard' && 'Portfolio'}
           {view === 'reminders' && 'Service Reminders'}
           {view === 'export' && 'Export'}
+          {view === 'settings' && 'Settings'}
         </h1>
         {view === 'collection' && (
           <button
@@ -120,6 +123,7 @@ export default function App() {
         {view === 'dashboard' && <Dashboard watches={watches} />}
         {view === 'reminders' && <ServiceReminders watches={watches} onView={handleViewWatch} />}
         {view === 'export' && <ExportPanel watches={watches} />}
+        {view === 'settings' && <Settings watchCount={watches.length} />}
       </main>
 
       {/* Bottom Nav */}
